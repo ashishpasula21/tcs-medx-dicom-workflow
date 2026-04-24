@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useWorkflow } from '../context/WorkflowContext';
 
 export default function Screen07() {
-  const { workflowData, completeScreen, completedScreens, viewingProject } = useWorkflow();
+  const { workflowData, completeScreen, completedScreens, viewingProject, setCurrentScreen } = useWorkflow();
   const isDone = completedScreens.includes(7);
+  const isDeployedView2 = !!viewingProject && viewingProject.status === 'deployed';
   const [sageMakerOpened, setSageMakerOpened] = useState(false);
 
   const project = viewingProject;
@@ -78,8 +79,8 @@ export default function Screen07() {
       </div>
 
       <div className="btn-group">
-        <button className="btn btn-primary" onClick={() => completeScreen(7)} disabled={isDone}>
-          {isDone ? '✓ Completed' : 'Proceed to GxP Promotion →'}
+        <button className="btn btn-primary" onClick={() => isDeployedView2 ? setCurrentScreen(8) : completeScreen(7)} disabled={isDone && !isDeployedView2}>
+          {isDone && !isDeployedView2 ? '✓ Completed' : 'Proceed to GxP Promotion →'}
         </button>
       </div>
     </div>

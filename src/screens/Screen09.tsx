@@ -36,7 +36,7 @@ const sevColor = (s: Incident['severity']) => s === 'High' ? 'badge-err' : s ===
 const statusColor = (s: Incident['status']) => s === 'Resolved' ? 'badge-ok' : s === 'Investigating' ? 'badge-warn' : 'badge-err';
 
 export default function Screen09() {
-  const { workflowData, updateWorkflowData, completeScreen, completedScreens, viewingProject } = useWorkflow();
+  const { workflowData, updateWorkflowData, completeScreen, completedScreens, viewingProject, setCurrentScreen } = useWorkflow();
   const isDone = completedScreens.includes(9);
   const { selectedAlgorithm, deploymentReviewDecision, deploymentSignedOff } = workflowData;
 
@@ -105,8 +105,8 @@ export default function Screen09() {
           <button className="btn btn-secondary" onClick={() => updateWorkflowData({ deploymentSignedOff: true })} disabled={deploymentSignedOff}>
             {deploymentSignedOff ? '✓ Signed Off' : 'Sign Off Deployment'}
           </button>
-          <button className="btn btn-primary" onClick={() => completeScreen(9)} disabled={!deploymentSignedOff || isDone}>
-            {isDone ? '✓ Completed' : 'Proceed to Business Outcomes →'}
+          <button className="btn btn-primary" onClick={() => isDeployedView ? setCurrentScreen(10) : completeScreen(9)} disabled={(!deploymentSignedOff || isDone) && !isDeployedView}>
+            {isDone && !isDeployedView ? '✓ Completed' : 'Proceed to Business Outcomes →'}
           </button>
         </div>
       </div>

@@ -48,8 +48,9 @@ const DEFAULT_RISKS: RiskEntry[] = [
 type AlgoTab = 'SaMD' | 'GxP' | 'DHT';
 
 export default function Screen08() {
-  const { workflowData, updateWorkflowData, completeScreen, completedScreens } = useWorkflow();
+  const { workflowData, updateWorkflowData, completeScreen, completedScreens, viewingProject, setCurrentScreen } = useWorkflow();
   const isDone = completedScreens.includes(8);
+  const isDeployedView = !!viewingProject && viewingProject.status === 'deployed';
   const { selectedAlgorithm, checkedGates, managerName, managerTitle, gxpApproved } = workflowData;
   const algo = selectedAlgorithm || 'ResNet-50 (Lung Nodule Detection)';
 
@@ -256,8 +257,8 @@ export default function Screen08() {
         <button className="btn btn-secondary" onClick={() => updateWorkflowData({ gxpApproved: true })} disabled={!canSignOff}>
           {gxpApproved ? '✓ Signed Off' : 'Approve & Sign Off'}
         </button>
-        <button className="btn btn-primary" onClick={() => completeScreen(8)} disabled={!gxpApproved || isDone}>
-          {isDone ? '✓ Completed' : 'Proceed to Deployment →'}
+        <button className="btn btn-primary" onClick={() => isDeployedView ? setCurrentScreen(9) : completeScreen(8)} disabled={(!gxpApproved || isDone) && !isDeployedView}>
+          {isDone && !isDeployedView ? '✓ Completed' : 'Proceed to Deployment →'}
         </button>
       </div>
 
