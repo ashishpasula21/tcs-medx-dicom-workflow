@@ -1,6 +1,8 @@
 import React from 'react';
 import { WorkflowProvider, useWorkflow } from './context/WorkflowContext';
 import WorkflowNav from './components/WorkflowNav';
+import AlertsPanel from './components/AlertsPanel';
+import LoginScreen from './screens/LoginScreen';
 import Screen01 from './screens/Screen01';
 import Screen02 from './screens/Screen02';
 import Screen03 from './screens/Screen03';
@@ -18,7 +20,10 @@ const SCREENS: Record<number, React.ComponentType> = {
 };
 
 function AppContent() {
-  const { currentScreen } = useWorkflow();
+  const { user, currentScreen } = useWorkflow();
+
+  if (!user) return <LoginScreen />;
+
   const Screen = SCREENS[currentScreen] ?? Screen01;
   return (
     <div className="app-layout">
@@ -26,6 +31,7 @@ function AppContent() {
       <main className="screen-content">
         <Screen />
       </main>
+      <AlertsPanel />
     </div>
   );
 }
