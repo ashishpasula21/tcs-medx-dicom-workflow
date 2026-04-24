@@ -73,7 +73,7 @@ export default function Screen02() {
     <div>
       <div className="screen-header">
         <div className="screen-tag">Screen 2 of 10</div>
-        <div className="screen-title">Near Real-Time Ingestion Pipeline</div>
+        <div className="screen-title">Ingestion Pipeline</div>
         <div className="screen-desc">
           Pipeline auto-started on arrival. Simulates 15-minute ingestion run — watch stages complete in real time.
         </div>
@@ -115,7 +115,7 @@ export default function Screen02() {
                 <div className="pipeline-stage">
                   <div className={`pipeline-node ${status}`}>
                     <div style={{ fontSize: 20 }}>{stage.icon}</div>
-                    <div>{stage.label.split(' ')[0]}</div>
+                    <div>{stage.label}</div>
                   </div>
                   <div className="pipeline-label">
                     {stage.label}<br />

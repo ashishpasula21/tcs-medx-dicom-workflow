@@ -41,7 +41,7 @@ export default function Screen01() {
 
       {isDone && (
         <div className="screen-complete-banner">
-          ✓ Study onboarded and ingestion activated. Ingestion pipeline is running.
+          ✓ Crawl complete. Study onboarded and ingestion pipeline is running.
         </div>
       )}
 
@@ -51,16 +51,16 @@ export default function Screen01() {
           <div style={{ fontSize: 36, marginBottom: 12 }}>⬆</div>
           <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Activate CRO Ingestion</div>
           <div className="text-muted" style={{ maxWidth: 400, margin: '0 auto 24px', fontSize: 13, lineHeight: 1.6 }}>
-            Click the button below to initiate the ingestion pipeline. Study configurations will be auto-populated from the CRO metadata registry.
+            Click the button below to crawl for new data.
           </div>
           <button className="btn btn-primary" style={{ padding: '12px 32px', fontSize: 14 }} onClick={handleActivateIngestion}>
-            Activate Ingestion
+            Crawl for New Data
           </button>
         </div>
       ) : (
         <>
           <div className="alert alert-ok" style={{ marginBottom: 20 }}>
-            ✓ Ingestion activated. Study configuration auto-populated — review and adjust below before confirming.
+            ✓ Crawl complete. Study configuration auto-populated — review and adjust below before confirming.
           </div>
 
           {/* Study Config — fully editable after activation */}

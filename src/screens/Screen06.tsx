@@ -1,6 +1,55 @@
 import React, { useState } from 'react';
 import { useWorkflow } from '../context/WorkflowContext';
 
+function ShareableLinkModal({ studyName, onClose }: { studyName: string; onClose: () => void }) {
+  const handleDownload = () => {
+    const content = JSON.stringify({
+      type: 'TCS-MEDX IDP Share Link',
+      study: studyName,
+      generatedAt: new Date().toISOString(),
+      url: `https://tcs-medx.roche.internal/idp/share/${btoa(studyName).slice(0, 16)}`,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      accessLevel: 'read-only',
+    }, null, 2);
+    const blob = new Blob([content], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `idp-share-link-${studyName.replace(/\s+/g, '-').toLowerCase()}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  return (
+    <>
+      <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 999 }} />
+      <div style={{
+        position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
+        background: '#fff', border: '2px solid #000', padding: '28px 32px',
+        zIndex: 1000, width: 440, maxWidth: '90vw', boxShadow: '8px 8px 0 #000',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+          <div style={{ fontSize: 16, fontWeight: 900 }}>Create Shareable Link</div>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', lineHeight: 1 }}>×</button>
+        </div>
+        <div style={{ fontSize: 13, color: '#444', marginBottom: 16, lineHeight: 1.6 }}>
+          A read-only shareable link to the IDP for <strong>{studyName}</strong> will be generated and downloaded as a JSON file. The link expires in 7 days.
+        </div>
+        <div style={{ padding: '10px 12px', background: '#f7f7f7', border: '1px solid #ddd', fontSize: 11, color: '#555', fontFamily: 'monospace', marginBottom: 20, wordBreak: 'break-all' }}>
+          https://tcs-medx.roche.internal/idp/share/{btoa(studyName).slice(0, 16)}
+        </div>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button onClick={handleDownload} style={{ flex: 1, padding: '10px 0', background: '#000', color: '#fff', border: '1.5px solid #000', fontWeight: 700, fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>
+            ⬇ Download Link File
+          </button>
+          <button onClick={onClose} style={{ flex: 1, padding: '10px 0', background: '#fff', color: '#000', border: '1.5px solid #000', fontWeight: 700, fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
 const DATA_SOURCES = [
   { id: 'imaging',   icon: '🖼', label: 'Imaging Data',    detail: '1,243 DICOM files · CT · Annotated' },
   { id: 'clinical',  icon: '📋', label: 'Clinical Data',   detail: 'Patient demographics, Lab results' },
@@ -15,6 +64,7 @@ export default function Screen06() {
   const { idpLinkedSources, idpProcessed } = workflowData;
 
   const [processing, setProcessing] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const [currentStep, setCurrentStep] = useState(idpProcessed ? LINEAGE_STEPS.length : -1);
   const [progress, setProgress] = useState(idpProcessed ? 100 : 0);
 
@@ -119,10 +169,22 @@ export default function Screen06() {
         <button className="btn btn-secondary" onClick={handleProcess} disabled={idpLinkedSources.length < 2 || processing || idpProcessed}>
           {idpProcessed ? '✓ IDP Created' : processing ? '⟳ Processing…' : 'Process & Create IDP'}
         </button>
+        {idpProcessed && (
+          <button className="btn btn-secondary" onClick={() => setShowShareModal(true)}>
+            🔗 Create Shareable Link
+          </button>
+        )}
         <button className="btn btn-primary" onClick={() => completeScreen(6)} disabled={!idpProcessed || isDone}>
-          {isDone ? '✓ Completed' : 'Proceed to Algorithm Workbench →'}
+          {isDone ? '✓ Committed to SageMaker' : 'Commit to SageMaker →'}
         </button>
       </div>
+
+      {showShareModal && (
+        <ShareableLinkModal
+          studyName={workflowData.study.studyName}
+          onClose={() => setShowShareModal(false)}
+        />
+      )}
     </div>
   );
 }

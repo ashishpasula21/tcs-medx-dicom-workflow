@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useWorkflow } from '../context/WorkflowContext';
+import ProjectsPanel from './ProjectsPanel';
 
 const STEPS = [
   { n: 1, label: 'Study Onboarding' },
@@ -45,11 +46,22 @@ function ResetModal({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: 
 }
 
 export default function WorkflowNav() {
-  const { user, logoutUser, currentScreen, completedScreens, setCurrentScreen, resetPipeline, alertsOpen, setAlertsOpen } = useWorkflow();
+  const {
+    user, logoutUser, currentScreen, completedScreens, setCurrentScreen,
+    resetPipeline, alertsOpen, setAlertsOpen,
+    projectsPanelOpen, setProjectsPanelOpen,
+    viewingProject, restoreSession,
+    workflowData,
+  } = useWorkflow();
   const [showReset, setShowReset] = useState(false);
 
-  // Count undismissed alerts for badge (static count since AlertsPanel manages dismissed state)
   const alertCount = 10;
+  const currentStudy = workflowData.study.studyName;
+  const studyOnboarded = completedScreens.includes(1);
+
+  const handleClearViewingProject = () => {
+    restoreSession();
+  };
 
   return (
     <>
@@ -68,16 +80,16 @@ export default function WorkflowNav() {
               <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {user.username}
               </div>
-              <div style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              <div style={{ fontSize: 10, color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                 {user.role}
               </div>
             </div>
             <button
               onClick={logoutUser}
               title="Sign out"
-              style={{ background: 'none', border: '1px solid #333', color: '#888', cursor: 'pointer', fontSize: 10, padding: '3px 6px', fontFamily: 'inherit', flexShrink: 0 }}
+              style={{ background: 'none', border: '1px solid #dc2626', color: '#dc2626', cursor: 'pointer', fontSize: 10, padding: '3px 6px', fontFamily: 'inherit', flexShrink: 0 }}
             >
-              OUT
+              Sign Out
             </button>
           </div>
         )}
@@ -87,11 +99,32 @@ export default function WorkflowNav() {
           <div className="nav-brand-sub">Clinical Imaging Platform</div>
         </div>
 
+        {/* Viewing a previous deployed project banner */}
+        {viewingProject && (
+          <div style={{ padding: '10px 20px', background: '#1a1a00', borderBottom: '1px solid #333300' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#ca8a04', marginBottom: 3 }}>Viewing Project</div>
+            <div style={{ fontSize: 11, color: '#fff', fontWeight: 700, lineHeight: 1.3, marginBottom: 6 }}>{viewingProject.name}</div>
+            <button onClick={handleClearViewingProject} style={{
+              fontSize: 10, fontWeight: 700, background: 'transparent', border: '1px solid #555',
+              color: '#aaa', cursor: 'pointer', padding: '3px 8px', fontFamily: 'inherit',
+            }}>← Back to current</button>
+          </div>
+        )}
+
+        {/* Current project name */}
+        {studyOnboarded && !viewingProject && (
+          <div style={{ padding: '10px 20px', background: '#111', borderBottom: '1px solid #222' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#888', marginBottom: 3 }}>Active Project</div>
+            <div style={{ fontSize: 11, color: '#ddd', fontWeight: 700, lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {currentStudy}
+            </div>
+          </div>
+        )}
+
         <ul className="nav-steps">
           {STEPS.map(({ n, label }) => {
             const done = completedScreens.includes(n);
             const active = currentScreen === n;
-            // Furthest accessible screen = highest completed + 1 (never shrinks when navigating back)
             const maxReached = completedScreens.length > 0 ? Math.max(...completedScreens) + 1 : 1;
             const accessible = n <= maxReached;
             const locked = !accessible;
@@ -102,7 +135,7 @@ export default function WorkflowNav() {
                 key={n}
                 className={cls}
                 style={{ cursor: accessible ? 'pointer' : 'not-allowed' }}
-                onClick={() => { if (accessible) setCurrentScreen(n); }}
+                onClick={() => { if (accessible && !viewingProject) setCurrentScreen(n); }}
               >
                 <div className="nav-step-num">{done ? '✓' : n}</div>
                 <span className="nav-step-label">{label}</span>
@@ -114,13 +147,28 @@ export default function WorkflowNav() {
         </ul>
 
         <div className="nav-footer">
+          {/* Projects button */}
+          <button
+            onClick={() => setProjectsPanelOpen(true)}
+            style={{
+              width: '100%', padding: '8px 0', marginBottom: 8,
+              background: 'transparent', color: '#ccc',
+              border: '1px solid #444', fontFamily: 'inherit',
+              fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
+              textTransform: 'uppercase', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+            }}
+          >
+            ◫ Projects
+          </button>
+
           {/* Alerts button */}
           <button
             onClick={() => setAlertsOpen(!alertsOpen)}
             style={{
               width: '100%', padding: '8px 0', marginBottom: 8,
               background: alertsOpen ? '#fff' : 'transparent',
-              color: alertsOpen ? '#000' : '#aaa',
+              color: alertsOpen ? '#000' : '#ccc',
               border: '1px solid #444', fontFamily: 'inherit',
               fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
               textTransform: 'uppercase', cursor: 'pointer', transition: 'all 0.15s',
@@ -134,7 +182,7 @@ export default function WorkflowNav() {
             }}>{alertCount}</span>
           </button>
 
-          <div style={{ marginBottom: 8, fontSize: 11, color: '#555' }}>
+          <div style={{ marginBottom: 8, fontSize: 11, color: '#777' }}>
             Step {currentScreen} of {STEPS.length} &nbsp;·&nbsp; {completedScreens.length} done
           </div>
 
@@ -142,18 +190,19 @@ export default function WorkflowNav() {
             onClick={() => setShowReset(true)}
             style={{
               width: '100%', padding: '7px 0', background: 'transparent',
-              color: '#888', border: '1px solid #333', fontFamily: 'inherit',
+              color: '#dc2626', border: '1px solid #dc2626', fontFamily: 'inherit',
               fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
               textTransform: 'uppercase', cursor: 'pointer', transition: 'all 0.15s',
             }}
-            onMouseEnter={e => { const b = e.currentTarget; b.style.background = '#dc2626'; b.style.color = '#fff'; b.style.borderColor = '#dc2626'; }}
-            onMouseLeave={e => { const b = e.currentTarget; b.style.background = 'transparent'; b.style.color = '#888'; b.style.borderColor = '#333'; }}
+            onMouseEnter={e => { const b = e.currentTarget; b.style.background = '#dc2626'; b.style.color = '#fff'; }}
+            onMouseLeave={e => { const b = e.currentTarget; b.style.background = 'transparent'; b.style.color = '#dc2626'; }}
           >
             ↺ Restart Pipeline
           </button>
         </div>
       </nav>
 
+      {projectsPanelOpen && <ProjectsPanel />}
       {showReset && <ResetModal onConfirm={() => { resetPipeline(); setShowReset(false); }} onCancel={() => setShowReset(false)} />}
     </>
   );
