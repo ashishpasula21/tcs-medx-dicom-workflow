@@ -21,7 +21,7 @@ export default function Screen07() {
   return (
     <div>
       <div className="screen-header">
-        <div className="screen-tag">Screen 7 of 10</div>
+        <div className="screen-tag">Screen 7 of 10  ·  IAE CareSphere Dx</div>
         <div className="screen-title">Algorithm Development Workbench</div>
         <div className="screen-desc">
           {isDeployedView
@@ -40,7 +40,7 @@ export default function Screen07() {
         </div>
         <div style={{ fontSize: 13, color: '#666', maxWidth: 480, margin: '0 auto 24px', lineHeight: 1.7 }}>
           {isDeployedView
-            ? `This project is live and serving predictions in the GIP clinical workflow.`
+            ? `This project is live and serving predictions in the Clinical Information System Workflow.`
             : `Your algorithm and dataset have been committed. Training jobs, experiments, and model registry are managed directly in SageMaker Studio.`}
         </div>
 

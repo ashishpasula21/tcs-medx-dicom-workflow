@@ -28,10 +28,10 @@ export default function Screen10() {
   return (
     <div>
       <div className="screen-header">
-        <div className="screen-tag">Screen 10 of 10</div>
+        <div className="screen-tag">Screen 10 of 10  ·  IAE CareSphere Dx</div>
         <div className="screen-title">Business Outcomes Dashboard</div>
         <div className="screen-desc">
-          End-to-end summary: CRO ingestion → AI annotation → IDP creation → Risk management →
+          End-to-end summary: CRO ingestion → AI annotation → MCD Bundle creation → Risk management →
           GxP promotion → compliance package → live deployment with incident tracking. All governed, traceable, and auditable.
         </div>
       </div>
@@ -78,15 +78,15 @@ export default function Screen10() {
               `QC score: ${workflowData.qcScore}% → 96% (post-remediation)`,
               `${teamSize} readers assigned — HITL workflows active`,
               `${annotations} AI annotations confirmed with measurements signed off`,
-              'IDP created (Imaging + Clinical + Biomarker data linked)',
+              'MCD Bundle created (Imaging + Clinical + Biomarker data linked)',
               `Algorithm: ${algo}`,
               `Developed in ${lang.toUpperCase()} via AWS SageMaker`,
               riskSaved ? '3 risks assessed, scored, and mitigated' : 'Risk assessment pending',
               'GxP promotion approved — all 4 gates passed',
               complianceGenerated ? '6 compliance documents AI-generated (SVP, RMF, CFR 11…)' : 'Compliance package pending',
-              'Deployed to GIP clinical workflow',
+              'Deployed to Clinical Information System Workflow',
               'Monitoring active: Drift ✓ Bias ✓ Performance ✓',
-              'Incident tracking connected (Roche GIP)',
+              'Incident tracking connected (CareSphere Dx)',
               'CAPA process active — corrective actions logged',
             ].map((item, i) => (
               <li key={i} className="check-item">
@@ -160,7 +160,7 @@ export default function Screen10() {
         <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 0 }}>
           {[
             'CRO Upload', 'De-ID', 'QC/FAIR', 'Reading Center',
-            'AI Annotation', 'IDP', 'Algorithm Dev', 'Risk Mgmt',
+            'AI Annotation', 'MCD Bundle', 'Algorithm Dev', 'Risk Mgmt',
             'GxP Promotion', 'Deployment', 'CAPA', 'Live',
           ].map((step, i, arr) => (
             <React.Fragment key={step}>
@@ -181,9 +181,9 @@ export default function Screen10() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
           {[
             { label: 'Algorithm Dev', value: 'AWS SageMaker', note: `${lang.toUpperCase()} / PyTorch` },
-            { label: 'Data Platform', value: 'TCS-MEDX', note: 'DICOM + IDP pipeline' },
+            { label: 'Data Platform', value: 'CareSphere Dx', note: 'DICOM + MCD Bundle pipeline' },
             { label: 'Compliance', value: 'AI-Generated', note: 'SVP · RMF · CFR 11 · ISO 13485' },
-            { label: 'Incident Mgmt', value: 'Roche GIP', note: 'Incident + CAPA integrated' },
+            { label: 'Incident Mgmt', value: 'CareSphere Dx', note: 'Incident + CAPA integrated' },
           ].map(item => (
             <div key={item.label} style={{ padding: '12px 14px', border: '1px solid var(--border-light)', background: 'var(--surface)' }}>
               <div className="text-xs text-muted">{item.label}</div>
@@ -200,7 +200,7 @@ export default function Screen10() {
         </button>
         {viewed && (
           <div className="alert alert-ok" style={{ margin: 0, flex: 1 }}>
-            ✓ Full lifecycle demo complete: CRO → FAIR → AI annotation → IDP → Risk mgmt → GxP → Compliance package → Live deployment with CAPA. All governed, traceable, and reusable.
+            ✓ Full lifecycle demo complete: CRO → FAIR → AI annotation → MCD Bundle → Risk mgmt → GxP → Compliance package → Live deployment with CAPA. All governed, traceable, and reusable.
           </div>
         )}
         <button className="btn btn-primary" onClick={() => completeScreen(10)} disabled={!viewed || isDone}>

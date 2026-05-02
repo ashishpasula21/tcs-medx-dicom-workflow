@@ -27,7 +27,7 @@ export default function LoginScreen() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-brand">
-          <div className="login-brand-name">TCS-MEDX</div>
+          <div className="login-brand-name">TCS – IAE CareSphere Dx</div>
           <div className="login-brand-sub">Clinical Imaging Platform</div>
         </div>
 

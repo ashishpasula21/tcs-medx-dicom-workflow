@@ -8,7 +8,7 @@ const STEPS = [
   { n: 3, label: 'QC & FAIR' },
   { n: 4, label: 'Reading Center' },
   { n: 5, label: 'Reader Annotation' },
-  { n: 6, label: 'IDP Creation' },
+  { n: 6, label: 'MCD Bundle' },
   { n: 7, label: 'Algorithm Workbench' },
   { n: 8, label: 'GxP Promotion' },
   { n: 9, label: 'Deployment' },
@@ -95,7 +95,7 @@ export default function WorkflowNav() {
         )}
 
         <div className="nav-brand">
-          <div className="nav-brand-name">TCS-MEDX</div>
+          <div className="nav-brand-name">TCS – IAE CareSphere Dx</div>
           <div className="nav-brand-sub">Clinical Imaging Platform</div>
         </div>
 

@@ -384,12 +384,12 @@ export default function Screen05() {
   return (
     <div>
       <div className="screen-header">
-        <div className="screen-tag">Screen 5 of 10</div>
+        <div className="screen-tag">Screen 5 of 10  ·  IAE CareSphere Dx</div>
         <div className="screen-title">Reader Annotation View</div>
         <div className="screen-desc">Review AI-detected annotations on the pre-loaded DICOM image. Confirm, edit, or add findings, then sign off.</div>
       </div>
 
-      {isDone && <div className="screen-complete-banner">✓ Reader annotation signed off ({annotations.length} annotations). Proceed to IDP Creation.</div>}
+      {isDone && <div className="screen-complete-banner">✓ Reader annotation signed off ({annotations.length} annotations). Proceed to MCD Bundle.</div>}
 
       {unconfirmedPreset.length > 0 && !signedOff && (
         <div className="alert alert-warn" style={{ marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
@@ -589,7 +589,7 @@ export default function Screen05() {
           {signedOff ? '✓ Signed Off' : 'Reader Sign-Off'}
         </button>
         <button className="btn btn-primary" onClick={() => completeScreen(5)} disabled={!signedOff || isDone}>
-          {isDone ? '✓ Completed' : 'Proceed to IDP Creation →'}
+          {isDone ? '✓ Completed' : 'Proceed to MCD Bundle →'}
         </button>
       </div>
     </div>

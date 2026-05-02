@@ -72,7 +72,7 @@ export default function Screen02() {
   return (
     <div>
       <div className="screen-header">
-        <div className="screen-tag">Screen 2 of 10</div>
+        <div className="screen-tag">Screen 2 of 10  ·  IAE CareSphere Dx</div>
         <div className="screen-title">Ingestion Pipeline</div>
         <div className="screen-desc">
           Pipeline auto-started on arrival. Simulates 15-minute ingestion run — watch stages complete in real time.

@@ -73,7 +73,7 @@ export default function Screen03() {
   return (
     <div>
       <div className="screen-header">
-        <div className="screen-tag">Screen 3 of 10</div>
+        <div className="screen-tag">Screen 3 of 10  ·  IAE CareSphere Dx</div>
         <div className="screen-title">QC & FAIR Dashboard</div>
         <div className="screen-desc">Review dataset quality score, resolve AI-flagged issues, and verify FAIR compliance indicators.</div>
       </div>
@@ -108,7 +108,7 @@ export default function Screen03() {
         </div>
 
         <div className="card">
-          <div className="card-title">Roche FAIR Indicators</div>
+          <div className="card-title">FAIR Indicators</div>
           <div className="fair-grid">
             {FAIR.map(f => (
               <div key={f.letter} className={`fair-cell ${qcReviewed ? 'active' : ''}`} title={f.detail}>
@@ -118,7 +118,7 @@ export default function Screen03() {
               </div>
             ))}
           </div>
-          {qcReviewed && <div className="text-xs text-muted mt-8">All FAIR criteria satisfied per Roche compliance standard v3.2</div>}
+          {qcReviewed && <div className="text-xs text-muted mt-8">All FAIR criteria satisfied per compliance standard v3.2</div>}
         </div>
       </div>
 

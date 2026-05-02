@@ -4,17 +4,17 @@ import { useWorkflow } from '../context/WorkflowContext';
 function ShareableLinkModal({ studyName, onClose }: { studyName: string; onClose: () => void }) {
   const handleDownload = () => {
     const content = JSON.stringify({
-      type: 'TCS-MEDX IDP Share Link',
+      type: 'CareSphere Dx MCD Bundle Share Link',
       study: studyName,
       generatedAt: new Date().toISOString(),
-      url: `https://tcs-medx.roche.internal/idp/share/${btoa(studyName).slice(0, 16)}`,
+      url: `https://caresphere-dx.internal/mcd/share/${btoa(studyName).slice(0, 16)}`,
       expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
       accessLevel: 'read-only',
     }, null, 2);
     const blob = new Blob([content], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `idp-share-link-${studyName.replace(/\s+/g, '-').toLowerCase()}.json`;
+    a.download = `mcd-bundle-share-link-${studyName.replace(/\s+/g, '-').toLowerCase()}.json`;
     a.click();
     URL.revokeObjectURL(a.href);
   };
@@ -32,10 +32,10 @@ function ShareableLinkModal({ studyName, onClose }: { studyName: string; onClose
           <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', lineHeight: 1 }}>×</button>
         </div>
         <div style={{ fontSize: 13, color: '#444', marginBottom: 16, lineHeight: 1.6 }}>
-          A read-only shareable link to the IDP for <strong>{studyName}</strong> will be generated and downloaded as a JSON file. The link expires in 7 days.
+          A read-only shareable link to the MCD Bundle for <strong>{studyName}</strong> will be generated and downloaded as a JSON file. The link expires in 7 days.
         </div>
         <div style={{ padding: '10px 12px', background: '#f7f7f7', border: '1px solid #ddd', fontSize: 11, color: '#555', fontFamily: 'monospace', marginBottom: 20, wordBreak: 'break-all' }}>
-          https://tcs-medx.roche.internal/idp/share/{btoa(studyName).slice(0, 16)}
+          https://caresphere-dx.internal/mcd/share/{btoa(studyName).slice(0, 16)}
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
           <button onClick={handleDownload} style={{ flex: 1, padding: '10px 0', background: '#000', color: '#fff', border: '1.5px solid #000', fontWeight: 700, fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>
@@ -56,7 +56,7 @@ const DATA_SOURCES = [
   { id: 'biomarker', icon: '🧬', label: 'Biomarker Data',  detail: 'Genomic markers, Protein panels' },
 ];
 
-const LINEAGE_STEPS = ['Source', 'QC', 'Annotation', 'IDP'];
+const LINEAGE_STEPS = ['Source', 'QC', 'Annotation', 'MCD Bundle'];
 
 export default function Screen06() {
   const { workflowData, updateWorkflowData, completeScreen, completedScreens } = useWorkflow();
@@ -97,12 +97,12 @@ export default function Screen06() {
   return (
     <div>
       <div className="screen-header">
-        <div className="screen-tag">Screen 6 of 10</div>
-        <div className="screen-title">Integrated Data Package (IDP) Creation</div>
-        <div className="screen-desc">Link imaging, clinical, and biomarker data sources. Process lineage from source to IDP.</div>
+        <div className="screen-tag">Screen 6 of 10  ·  IAE CareSphere Dx</div>
+        <div className="screen-title">Multimodal Clinical Dataset Bundle</div>
+        <div className="screen-desc">Link imaging, clinical, and biomarker data sources. Process lineage from source to MCD Bundle.</div>
       </div>
 
-      {isDone && <div className="screen-complete-banner">✓ IDP created and lineage recorded.</div>}
+      {isDone && <div className="screen-complete-banner">✓ MCD Bundle created and lineage recorded.</div>}
 
       <div className="card">
         <div className="card-title">Data Sources — Select to Link</div>
@@ -123,12 +123,12 @@ export default function Screen06() {
           ))}
         </div>
         {idpLinkedSources.length < 2 && !idpProcessed && (
-          <div className="alert alert-info mt-12">Select at least 2 data sources to create an IDP.</div>
+          <div className="alert alert-info mt-12">Select at least 2 data sources to create an MCD Bundle.</div>
         )}
       </div>
 
       <div className="card">
-        <div className="card-title">IDP Lineage Workflow</div>
+        <div className="card-title">MCD Bundle Lineage Workflow</div>
         <div className="lineage-flow">
           {LINEAGE_STEPS.map((step, i) => (
             <React.Fragment key={step}>
@@ -150,15 +150,15 @@ export default function Screen06() {
           </div>
         )}
         {idpProcessed && (
-          <div className="alert alert-ok mt-12">✓ IDP created. {idpLinkedSources.length} sources linked. Full lineage recorded.</div>
+          <div className="alert alert-ok mt-12">✓ MCD Bundle created. {idpLinkedSources.length} sources linked. Full lineage recorded.</div>
         )}
       </div>
 
       {idpProcessed && (
         <div className="card">
-          <div className="card-title">IDP Summary</div>
+          <div className="card-title">MCD Bundle Summary</div>
           <div className="metric-grid">
-            {[[idpLinkedSources.length, 'Sources Linked'], ['1', 'IDP Version'], ['4', 'Lineage Steps'], ['100%', 'Traceability']].map(([v, l]) => (
+            {[[idpLinkedSources.length, 'Sources Linked'], ['1', 'MCD Version'], ['4', 'Lineage Steps'], ['100%', 'Traceability']].map(([v, l]) => (
               <div key={String(l)} className="metric-card"><div className="metric-value">{v}</div><div className="metric-label">{l}</div></div>
             ))}
           </div>
@@ -167,7 +167,7 @@ export default function Screen06() {
 
       <div className="btn-group">
         <button className="btn btn-secondary" onClick={handleProcess} disabled={idpLinkedSources.length < 2 || processing || idpProcessed}>
-          {idpProcessed ? '✓ IDP Created' : processing ? '⟳ Processing…' : 'Process & Create IDP'}
+          {idpProcessed ? '✓ MCD Bundle Created' : processing ? '⟳ Processing…' : 'Process & Create MCD Bundle'}
         </button>
         {idpProcessed && (
           <button className="btn btn-secondary" onClick={() => setShowShareModal(true)}>
