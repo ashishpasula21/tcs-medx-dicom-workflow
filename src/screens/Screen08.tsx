@@ -111,7 +111,7 @@ export default function Screen08() {
           style={{ position: 'absolute', bottom: 16, right: 0 }}>
           ⚠ Risk Register
         </button>
-        <div className="screen-tag">Screen 8 of 10  ·  IAE CareSphere Dx</div>
+        <div className="screen-tag">Screen 8 of 10</div>
         <div className="screen-title">GxP Promotion Workflow</div>
         <div className="screen-desc">Complete approval gates, check off algorithm documents, and obtain manager sign-off to promote to GxP.</div>
       </div>

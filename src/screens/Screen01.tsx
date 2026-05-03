@@ -34,7 +34,7 @@ export default function Screen01() {
   return (
     <div>
       <div className="screen-header">
-        <div className="screen-tag">Screen 1 of 10  ·  IAE CareSphere Dx</div>
+        <div className="screen-tag">Screen 1 of 10</div>
         <div className="screen-title">Study Onboarding Dashboard</div>
         <div className="screen-desc">Activate ingestion to auto-configure the study, then review and adjust settings before proceeding.</div>
       </div>
@@ -49,7 +49,7 @@ export default function Screen01() {
       {!study.ingestionActivated ? (
         <div className="card" style={{ textAlign: 'center', padding: '40px 32px' }}>
           <div style={{ fontSize: 36, marginBottom: 12 }}>⬆</div>
-          <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Activate Clinical Datasets Ingestion</div>
+          <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Activate CRO Ingestion</div>
           <div className="text-muted" style={{ maxWidth: 400, margin: '0 auto 24px', fontSize: 13, lineHeight: 1.6 }}>
             Click the button below to crawl for new data.
           </div>
@@ -113,7 +113,7 @@ export default function Screen01() {
             <ul className="check-list">
               <li className="check-item"><div className="check-icon ok">✓</div><span>DICOM standard attributes (Patient, Study, Series, Instance)</span></li>
               <li className="check-item"><div className="check-icon ok">✓</div><span>Study-specific protocol fields ({study.modality})</span></li>
-              <li className="check-item"><div className="check-icon ok">✓</div><span>FAIR metadata requirements — compliance standard v3.2</span></li>
+              <li className="check-item"><div className="check-icon ok">✓</div><span>FAIR metadata requirements — Roche compliance v3.2</span></li>
               <li className="check-item"><div className="check-icon ok">✓</div><span>De-identification rules set (PHI removal profile)</span></li>
             </ul>
           </div>

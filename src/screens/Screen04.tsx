@@ -29,7 +29,7 @@ export default function Screen04() {
   return (
     <div>
       <div className="screen-header">
-        <div className="screen-tag">Screen 4 of 10  ·  IAE CareSphere Dx</div>
+        <div className="screen-tag">Screen 4 of 10</div>
         <div className="screen-title">Internal Reading Center & Human-in-the-Loop</div>
         <div className="screen-desc">Assemble the reading team, assign the dataset version, and enable HITL audit workflows.</div>
       </div>

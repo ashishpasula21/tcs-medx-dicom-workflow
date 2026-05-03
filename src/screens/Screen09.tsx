@@ -22,7 +22,7 @@ interface CapaEntry { id: string; incidentId: string; action: string; owner: str
 
 const MOCK_INCIDENTS: Incident[] = [
   { id: 'INC-001', title: 'Elevated false-negative rate observed in Series 12 (new scanner model)', severity: 'Medium', date: '2026-04-18', status: 'Investigating', source: 'SageMaker Model Monitor' },
-  { id: 'INC-002', title: 'Prediction latency spike >2s on 3 consecutive requests', severity: 'Low', date: '2026-04-20', status: 'Resolved', source: 'CareSphere Dx Monitoring' },
+  { id: 'INC-002', title: 'Prediction latency spike >2s on 3 consecutive requests', severity: 'Low', date: '2026-04-20', status: 'Resolved', source: 'Roche GIP Monitoring' },
   { id: 'INC-003', title: 'Bias metric exceeded 8% demographic parity gap (elderly cohort)', severity: 'High', date: '2026-04-22', status: 'Open', source: 'Clinical Review' },
 ];
 
@@ -66,9 +66,9 @@ export default function Screen09() {
     return (
       <div>
         <div className="screen-header">
-          <div className="screen-tag">Screen 9 of 10  ·  IAE CareSphere Dx</div>
+          <div className="screen-tag">Screen 9 of 10</div>
           <div className="screen-title">Deployment Dashboard</div>
-          <div className="screen-desc">Algorithm is being deployed to the Clinical Information System Workflow.</div>
+          <div className="screen-desc">Algorithm is being deployed to the GIP clinical workflow.</div>
         </div>
 
         {isDone && <div className="screen-complete-banner">✓ Deployment complete. Proceed to Business Outcomes.</div>}
@@ -77,7 +77,7 @@ export default function Screen09() {
           <div style={{ fontSize: 48, marginBottom: 16 }}>🚀</div>
           <div style={{ fontSize: 22, fontWeight: 900, marginBottom: 8 }}>Deployment in Progress</div>
           <div style={{ fontSize: 13, color: '#666', maxWidth: 460, margin: '0 auto 28px', lineHeight: 1.7 }}>
-            Your GxP-validated algorithm is being deployed to the <strong>Clinical Information System Workflow — Oncology Radiology Pipeline</strong>.
+            Your GxP-validated algorithm is being deployed to the <strong>GIP Clinical Workflow — Oncology Radiology Pipeline</strong>.
             Monitoring and incident tracking will be available once the deployment is live.
           </div>
 
@@ -85,7 +85,7 @@ export default function Screen09() {
             {[
               ['Algorithm', algo],
               ['Environment', env],
-              ['Target', 'Clinical Information System Workflow'],
+              ['Target', 'GIP Clinical Workflow'],
               ['Stage', 'GxP Validated — Deploying'],
             ].map(([label, value]) => (
               <div key={label} style={{ padding: '10px 16px', background: '#f7f7f7', borderRight: '1px solid #eee' }}>
@@ -117,13 +117,13 @@ export default function Screen09() {
   return (
     <div>
       <div className="screen-header">
-        <div className="screen-tag">Screen 9 of 10  ·  IAE CareSphere Dx</div>
+        <div className="screen-tag">Screen 9 of 10</div>
         <div className="screen-title">Deployment Dashboard</div>
         <div className="screen-desc">Live deployment details for <strong>{viewingProject.name}</strong> — monitoring, incidents, and CAPA.</div>
       </div>
 
       <div className="screen-complete-banner" style={{ background: 'var(--ok-bg)', border: '1px solid var(--ok)', color: 'var(--ok)' }}>
-        ✓ Deployed on {viewingProject.deployedAt} · Model live in Clinical Information System Workflow
+        ✓ Deployed on {viewingProject.deployedAt} · Model live in GIP clinical workflow
       </div>
 
       {/* Deployment overview */}
@@ -133,7 +133,7 @@ export default function Screen09() {
           <div className="text-xs text-muted">Algorithm</div>
           <div className="font-bold mt-4 mb-12" style={{ fontSize: 15 }}>{algo}</div>
           <div className="text-xs text-muted">Target</div>
-          <div className="font-bold mt-4 mb-12">Clinical Information System Workflow — Oncology Radiology Pipeline</div>
+          <div className="font-bold mt-4 mb-12">GIP Clinical Workflow — Oncology Radiology Pipeline</div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <span className="badge badge-ok">✓ Live</span>
             <span className="badge badge-neutral">v1.0.0</span>
@@ -184,7 +184,7 @@ export default function Screen09() {
       <div className="card">
         <div className="card-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           Incident Tracking
-          <span className="badge badge-neutral" style={{ fontSize: 10 }}>CareSphere Dx Integration</span>
+          <span className="badge badge-neutral" style={{ fontSize: 10 }}>Roche GIP Integration</span>
           {openIncidents > 0
             ? <span className="badge badge-err" style={{ marginLeft: 'auto' }}>{openIncidents} Open</span>
             : <span className="badge badge-ok" style={{ marginLeft: 'auto' }}>All Resolved</span>}
@@ -218,7 +218,7 @@ export default function Screen09() {
       <div className="card">
         <div className="card-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           CAPA Process
-          <span className="badge badge-neutral" style={{ fontSize: 10 }}>CareSphere Dx Integration</span>
+          <span className="badge badge-neutral" style={{ fontSize: 10 }}>Roche GIP Integration</span>
           <span className="text-xs text-muted" style={{ marginLeft: 'auto' }}>
             {capa.filter(c => c.completed).length}/{capa.length} completed
           </span>

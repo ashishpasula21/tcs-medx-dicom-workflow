@@ -19,13 +19,13 @@ const ALL_ALERTS: Alert[] = [
   { id: 6, screen: 9, level: 'warn', title: 'Model drift trending upward',       msg: 'KL divergence increased 18% over 7 days. Performance review recommended.',               time: '35m ago' },
   { id: 7, screen: 8, level: 'info', title: 'QA review pending 48h',             msg: 'Model validation package awaiting QA sign-off since yesterday 09:14.',                    time: '1h ago' },
   { id: 8, screen: 7, level: 'info', title: 'New algorithm version available',   msg: 'EfficientNet-B5 v2.1 is available in the workbench. Benchmark shows +1.4% AUC.',          time: '2h ago' },
-  { id: 9, screen: 6, level: 'info', title: 'Biomarker dataset update available', msg: 'Biomarker dataset v2.0 released. Re-link MCD Bundle to include latest panel data.',      time: '3h ago' },
+  { id: 9, screen: 6, level: 'info', title: 'Biomarker dataset update available', msg: 'Biomarker dataset v2.0 released. Re-link IDP to include latest panel data.',             time: '3h ago' },
   { id: 10, screen: 3, level: 'info', title: 'FAIR re-assessment scheduled',     msg: 'Quarterly FAIR compliance re-assessment is due in 5 days per governance policy.',         time: '5h ago' },
 ];
 
 const SCREEN_NAMES: Record<number, string> = {
   1: 'Study Onboarding', 2: 'Ingestion Pipeline', 3: 'QC & FAIR',
-  4: 'Reading Center', 5: 'Reader Annotation', 6: 'MCD Bundle',
+  4: 'Reading Center', 5: 'Reader Annotation', 6: 'IDP Creation',
   7: 'Algorithm Workbench', 8: 'GxP Promotion', 9: 'Deployment', 10: 'Business Outcomes',
 };
 
